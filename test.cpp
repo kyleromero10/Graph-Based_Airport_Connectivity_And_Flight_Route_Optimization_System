@@ -4,6 +4,8 @@
 
 #include "Airport.h"
 #include "Graph.h"
+#include "MinHeap.h"
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -43,11 +45,11 @@ int main() {
   std::vector<std::string> row;
   std::string line, word, temp;
   
-  // reads until temp doesn't receive input
-  while (std::getline(readFile, temp)) {
-    row.clear();
+  std::getline(readFile, temp); // get rid of column aliases
 
-    getline(readFile, line);
+  // reads until temp doesn't receive input
+  while (std::getline(readFile, line)) {
+    row.clear();
 
     // used for tokenizing the rows
     std::stringstream s(line);
@@ -70,6 +72,14 @@ int main() {
   }
 
   g.print();
+  MinHeap graphHeap(g);
+  while (graphHeap.size > 0) {
+    std::cout << graphHeap.popMin().distance << " "; 
+  }
+
+  std::cout << '\n';
+
+
   readFile.close();
 
   return 0;
