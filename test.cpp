@@ -6,6 +6,8 @@
 #include "Graph.h"
 #include "MinHeap.h"
 
+#include "findAllConnections(5).cpp"
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -59,14 +61,13 @@ int main() {
       row.push_back(word);
     } 
   
-    Airport origin(row[0], "Test", "Test");
-    Airport destination(row[1], "Test", "Test");
+    Airport origin(row[0], "Test", "Test", g.airports.size());
+    g.addAirport(origin);
+    Airport destination(row[1], "Test", "Test", g.airports.size());
+    g.addAirport(destination);
     
     double dist = std::stod(row[6]);
     double cost = std::stod(row[7]);
-
-    g.addAirport(origin);
-    g.addAirport(destination);
 
     g.addConnection(origin, dist, cost, destination);
   }
@@ -79,6 +80,7 @@ int main() {
 
   std::cout << '\n';
 
+  printAllConnections(g);
 
   readFile.close();
 
