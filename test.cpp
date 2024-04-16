@@ -6,6 +6,7 @@
 #include "Graph.h"
 #include "MinHeap.h"
 
+#include "Two_Djikstra.cpp"
 #include "findAllConnections(5).cpp"
 
 #include <fstream>
@@ -81,6 +82,8 @@ int main() {
   std::cout << '\n';
 
   printAllConnections(g);
+
+  printShortestPath(g, g.airports[0], g.airports[5]);
 
   readFile.close();
 

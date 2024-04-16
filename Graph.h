@@ -49,6 +49,17 @@ public:
 
     connections[airportIndex].push_back(Edge(distance, cost ,destination));
   }
+
+  Edge findConnection(int origin, int destination) {
+      for (int i = 0; i < connections[origin].size(); i++) {
+          Edge curConnection = connections[origin][i];
+          if (curConnection.destination.index == destination) {
+              return curConnection;
+          }
+      }
+
+      return {};
+  }
   
   // Prints the adjacency list of the graph
   void print() {
