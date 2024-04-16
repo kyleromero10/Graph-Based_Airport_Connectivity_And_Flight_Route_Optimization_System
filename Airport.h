@@ -13,7 +13,7 @@ public:
     this->airportInitials = "None";
     this->city = "None";
     this->state = "None";
-    this->index = -1;
+    int index = -1;
   }
 
   Airport(const std::string& initials, const std::string& city, const std::string& state, int index) {
