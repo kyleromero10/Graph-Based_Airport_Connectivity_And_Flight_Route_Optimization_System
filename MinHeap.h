@@ -19,8 +19,8 @@ public:
 
   bool useCostToCompare = false; // Do determine if our comparisons use cost instead of distance
 
-  MinHeap() {}
-  MinHeap(bool useCostToCompare) : useCostToCompare(useCostToCompare){}
+  MinHeap() { arr.push_back(Edge()); }
+  MinHeap(bool useCostToCompare) : useCostToCompare(useCostToCompare){ arr.push_back(Edge()); }
 
   MinHeap(const Graph& graph) {
     std::vector<std::vector<Edge>> connections = graph.connections;
@@ -56,7 +56,7 @@ public:
   // Returns the index with the minimum value (whether it is cost or distance)
   int minIndex(int ind1, int ind2) {
     // If one index is out of bounds return the other, if they both are return -1
-    if (ind1 >= size && ind2 >= size) {
+    if (ind1 > size && ind2 > size) {
       return -1;
     }
     // ind1 is in bounds
@@ -87,8 +87,8 @@ public:
   // inserts item into MinHeap
   void insert(const Edge& toInsert) {
     arr.push_back(toInsert);
-    percolateUp();
     size++;
+    percolateUp(size);
   }
 
   // Deletes and returns the top element (the min)
@@ -108,19 +108,16 @@ public:
   }
   
   // When inserting a new element, it starts at the bottom and we need to make sure it's smaller than all of its parents
-  void percolateUp() {
-    int cur = arr.size() - 1;
+  void percolateUp(int index) {
+    if (index <= 1) return;
+    
+    int parentIndex = index / 2;
+    int minInd = minIndex(index, parentIndex);
 
-    while (cur > 1) {
-      int parent = cur / 2;
-
-      int comparison = compare(arr[cur], arr[parent]);
-      // arr[cur] > arr[parent]
-      if (comparison > 0) {
-        swap(cur, parent);
-        cur = parent;
-      }
-      else break; // reached correct spot
+    // arr[index] < arr[parentIndex] 
+    if (minInd == index) {
+      swap(index, parentIndex);
+      percolateUp(parentIndex);
     }
   }
   
