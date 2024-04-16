@@ -32,7 +32,7 @@ public:
     if (findAirport(airport.airportInitials) != -1) return; 
 
     airports.push_back(airport);
-    connections.push_back(std::vector<Edge>(0)); // adds new connection list of size 0
+    connections.emplace_back(0); // adds new connection list of size 0
   }
 
   // Inserts a connection at a specified airport
