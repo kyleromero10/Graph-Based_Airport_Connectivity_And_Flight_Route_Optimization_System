@@ -12,6 +12,12 @@ public:
   std::vector<Airport> airports;
 
   Graph(){}
+
+//  Graph(Graph &g)
+//  {
+//      this->connections = g.connections;
+//      this->airports = g.airports;
+//  }
   
   // returns index of aiport matching the initials
   // This function gets called a lot and is linear so switching to a better
@@ -77,4 +83,32 @@ public:
 
     std::cout << "******End of Graph******\n";
   }
+
+  void convertToUndirected(){
+      for (int i = 0; i < connections.size(); i++){
+        std::vector<Edge> currConn = connections[i];
+        Airport currAirport = airports[i];
+
+        for(int j = 0; j < currConn.size(); j++){
+            Edge currEdge = currConn[j];
+            Airport destAirport = currEdge.destination;
+            Edge connection = findConnection(destAirport.index, currAirport.index);
+
+            if(connection.distance == 0 ){
+                Edge newEdgeReverse = Edge(currEdge.distance, currEdge.cost, currAirport);
+                connections[destAirport.index].push_back(newEdgeReverse);
+            }
+            else{
+                if(currEdge.cost < connection.cost){
+                    connection.cost = currEdge.cost;
+                }
+                else{
+                    currEdge.cost = connection.cost;
+                }
+            }
+        }
+    }
+  }
 };
+
+

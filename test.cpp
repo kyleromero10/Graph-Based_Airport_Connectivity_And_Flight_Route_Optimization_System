@@ -122,6 +122,12 @@ int main() {
   printAllConnections(g);
   std::cout << '\n';
 
+  // Problem 6
+  g.convertToUndirected();
+
+  // For testing problem 6
+  // g.print();
+
   readFile.close();
 
   return 0;
