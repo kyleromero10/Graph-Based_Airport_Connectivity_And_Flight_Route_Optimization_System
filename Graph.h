@@ -41,7 +41,7 @@ public:
 
     // no airport in list yet
     if (airportIndex == -1) {
-      airports.push_back(origin);
+      addAirport(origin);
       connections.back().push_back(Edge(distance, cost, destination));
 
       return;

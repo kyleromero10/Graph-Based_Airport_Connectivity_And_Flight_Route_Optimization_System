@@ -25,10 +25,9 @@ std::vector<int> findNumConnections(const Graph& graph) {
 void printAllConnections(const Graph& graph) {
   std::cout << "Airport       Connections\n";
 
-  std::vector<int> numConnections =  findNumConnections(graph);
+  std::vector<int> numConnections = findNumConnections(graph);
 
   for (int i = 0; i < numConnections.size(); i++) {
-    std::cout << graph.airports[i].airportInitials << "           " <<
-    numConnections[i] << '\n';
+    std::cout << graph.airports[i].airportInitials << "           " << numConnections[i] << '\n';
   }
 }

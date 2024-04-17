@@ -1,6 +1,7 @@
 //
 // Created by misfi on 4/15/2024.
 //
+#pragma once
 
 #include <algorithm>
 #include "Graph.h"
@@ -8,30 +9,28 @@
 #include "Airport.h"
 #include "MinHeap.h"
 
-
+// Finds the shortest path from origin to destination using the Djikstra's algorithm
 std::vector<Edge> shortest_path(Graph graph, Airport origin, Airport destination){
     MinHeap prioQueue;
-
+    
     int size = graph.connections.size();
     int originIndex = origin.index;
     int destIndex = destination.index;
-
+    
     std::vector<double> dist(size, INT_MAX); // holds shortest distance from source to index[i] node
     std::vector<int> prev(size, -1); // holds the index of the previous node
 
     dist[originIndex] = 0;
-    int min = INT_MAX;
     std::vector<Edge> curr = graph.connections[originIndex];
-
-    for(int i = 0; i < curr.size(); i++){
-        prioQueue.insert(curr[i]);
-    }
+    
+    // Insert edge to get algorithm started
+    prioQueue.insert(Edge(0, 0, origin));
 
     while(prioQueue.size > 0){
         Edge minEdge = prioQueue.popMin();
-        if(destination.airportInitials == minEdge.destination.airportInitials){
-            break;
-        }
+
+        if(destination.airportInitials == minEdge.destination.airportInitials) break;
+
         int minIndex = minEdge.destination.index;
 
         std::vector<Edge> neighbor = graph.connections[minIndex];
@@ -39,8 +38,8 @@ std::vector<Edge> shortest_path(Graph graph, Airport origin, Airport destination
         for(int i = 0; i < neighbor.size(); i++){
             double distance = neighbor[i].distance;
             int edgeIndex = neighbor[i].destination.index;
-
-            if(dist[minIndex] != INT_MAX && dist[minIndex] + distance < dist[edgeIndex]){
+            
+            if(dist[minIndex] + distance < dist[edgeIndex]){
                 dist[edgeIndex] = dist[minIndex] + distance;
                 prev[edgeIndex] = minIndex;
                 prioQueue.insert(neighbor[i]);
@@ -63,15 +62,25 @@ std::vector<Edge> shortest_path(Graph graph, Airport origin, Airport destination
 }
 
 void printShortestPath(Graph g, Airport origin, Airport destination) {
-    std::cout << "SHORTEST PATH: ";
+    std::cout << "Shortest route from " << origin.airportInitials << " to " << destination.airportInitials << ": ";
 
     std::vector<Edge> shortpath = shortest_path(g, origin, destination);
+
+    double totalDistance = 0.0;
+    double totalCost = 0.0;
+
+    if (shortpath.size() == 0) {
+        std::cout << "None\n";
+        return;
+    }
 
     std::cout << origin.airportInitials;
     for (int i = 0; i < shortpath.size(); i++) {
         std::cout << "->" << shortpath[i].destination.airportInitials;
+        totalDistance += shortpath[i].distance;
+        totalCost += shortpath[i].cost;
     }
-    std::cout << '\n';
+    std::cout << ". The length is " << totalDistance << ". The cost is " << totalCost << ".\n";
 }
 
 

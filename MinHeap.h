@@ -56,7 +56,7 @@ public:
   // Returns the index with the minimum value (whether it is cost or distance)
   int minIndex(int ind1, int ind2) {
     // If one index is out of bounds return the other, if they both are return -1
-    if (ind1 > size && ind2 > size) {
+    if (ind1 >= size && ind2 >= size) {
       return -1;
     }
     // ind1 is in bounds
@@ -99,7 +99,7 @@ public:
     
     Edge toReturn = arr[1];
     arr[1] = arr[size]; // index 1 is top
-
+  
     arr.pop_back();
     size--;
     percolateDown(1);
@@ -115,7 +115,7 @@ public:
     int minInd = minIndex(index, parentIndex);
 
     // arr[index] < arr[parentIndex] 
-    if (minInd == index) {
+    if (minInd != index) {
       swap(index, parentIndex);
       percolateUp(parentIndex);
     }
