@@ -22,4 +22,8 @@ public:
     this->state = state;
     this->index = index;
   }
+
+  bool operator==(const Airport& other) const {
+      return this->airportInitials == other.airportInitials;
+  }
 };

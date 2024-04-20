@@ -8,6 +8,7 @@
 
 #include "Two_Djikstra.cpp"
 #include "shortestPathInState(3).cpp"
+#include "shortPathWithGivenStops(4).cpp"
 #include "findAllConnections(5).cpp"
 
 #include <fstream>
@@ -100,7 +101,7 @@ int main() {
   }
   
   // print graph connections
-  //g.print();
+  g.print();
 
   // MinHeap test (should output in sorted order)
   // MinHeap graphHeap(g);
@@ -111,16 +112,19 @@ int main() {
   // std::cout << '\n';
   
   // Problem 2
-  printShortestPath(g, g.airports[5], g.airports[9]);
+  printShortestPath(g, g.airports[0], g.airports[16]);
   std::cout << '\n';
 
   // Problem 3
   printShortestPathsInState(g, "GA", g.airports[0]);
   std::cout << '\n';
 
+  // Problem 4
+  printShortestPath(g, g.airports[0], g.airports[16], 5);
+
   // Problem 5
-  printAllConnections(g);
-  std::cout << '\n';
+//  printAllConnections(g);
+//  std::cout << '\n';
 
   // Problem 6
   g.convertToUndirected();
